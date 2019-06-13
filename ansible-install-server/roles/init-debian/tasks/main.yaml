@@ -1,0 +1,27 @@
+---
+- name: configure name servers
+  shell: echo "nameserver 8.8.8.8" > /etc/resolvconf/resolv.conf.d/base
+  become: yes
+- name: update name server
+  shell: resolvconf -u
+  become: yes
+- name: Update apt cache
+  apt: update_cache=yes
+  become: yes
+
+- name: Upgrade packages
+  apt: upgrade=dist force=yes
+  become: yes
+
+- name: Install NTP
+  apt: package=ntp state=present update_cache=yes
+  become: yes
+
+- name: Copy over the NTP configuration
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  notify:
+    - restart ntp
+    - force ntp update
+- name: Make sure NTP is started up
+  service: name=ntp state=started enabled=yes
+  become: yes

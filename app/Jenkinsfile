@@ -1,0 +1,5 @@
+// This pipeline use shared lib at folder jenkins, use file jenkins/vars/fullJenkins.groovy
+// This jenkins file share betwend dev and master branch
+@Library('util') _
+
+fullPipeline env.JOB_BASE_NAME, env.BRANCH_NAME

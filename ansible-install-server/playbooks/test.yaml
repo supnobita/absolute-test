@@ -1,0 +1,7 @@
+---
+- hosts: inits
+  become: yes
+  gather_facts: yes
+  roles:
+    - init-debian
+    - install-jenkins

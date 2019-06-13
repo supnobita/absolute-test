@@ -1,0 +1,9 @@
+---
+- name: Download minikube
+  get_url:
+    url: https://storage.googleapis.com/minikube/releases/v1.1.1/minikube-linux-amd64
+    dest: /bin/minikube
+    mode: '755'
+  become: yes
+- name: Run minikube
+  shell: minikube start &
